@@ -36,4 +36,5 @@ public class Cliente {
 
     @Column(length = 255)
     private String direccion;
+    
 }
