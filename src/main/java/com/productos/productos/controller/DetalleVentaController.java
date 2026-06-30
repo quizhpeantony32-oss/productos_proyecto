@@ -2,6 +2,7 @@ package com.productos.productos.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,12 +38,12 @@ public class DetalleVentaController {
     }
 
     @PostMapping
-    public ResponseEntity<DetalleVenta> create(@RequestBody DetalleVenta detalleVenta) {
+    public ResponseEntity<DetalleVenta> create(@Valid @RequestBody DetalleVenta detalleVenta) {
         return ResponseEntity.status(HttpStatus.CREATED).body(detalleVentaService.create(detalleVenta));
     }
 
     @PutMapping("/{id}")
-    public DetalleVenta update(@PathVariable Long id, @RequestBody DetalleVenta detalleVenta) {
+    public DetalleVenta update(@PathVariable Long id, @Valid @RequestBody DetalleVenta detalleVenta) {
         return detalleVentaService.update(id, detalleVenta);
     }
 
