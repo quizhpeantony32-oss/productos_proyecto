@@ -2,6 +2,8 @@ package com.productos.productos.entity;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,21 +21,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "detalle_ventas")
+@Table(name = "detalle_pedidos")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DetalleVenta {
+public class DetallePedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
-    @JoinColumn(name = "venta_id", nullable = false)
-    private Venta venta;
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "producto_id", nullable = false)
@@ -48,7 +51,6 @@ public class DetalleVenta {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal subtotal;
 
-    
     @PrePersist
     @PreUpdate
     private void calcularSubtotal() {

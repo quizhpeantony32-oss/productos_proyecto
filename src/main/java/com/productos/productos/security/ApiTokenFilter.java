@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class ApiTokenFilter implements Filter {
 
     private static final String HEADER_NAME = "X-API-TOKEN";
-    private static final String TOKEN = "1234";
+    private static final String TOKEN = "111024";
     private static final Set<String> PROTECTED_METHODS = Set.of("POST", "PUT", "DELETE");
 
     @Override
