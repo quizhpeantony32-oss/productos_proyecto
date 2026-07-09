@@ -10,14 +10,19 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApiTokenFilter implements Filter {
 
     private static final String HEADER_NAME = "X-API-TOKEN";
-    private static final String TOKEN = "111024";
-    private static final Set<String> PROTECTED_METHODS = Set.of("POST", "PUT", "DELETE");
+    private static final Set<String> PROTECTED_METHODS = Set.of("POST", "PUT", "PATCH", "DELETE");
+    private final String token;
+
+    public ApiTokenFilter(@Value("${app.security.api-token:111024}") String token) {
+        this.token = token;
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -38,7 +43,7 @@ public class ApiTokenFilter implements Filter {
         }
 
         String incomingToken = httpRequest.getHeader(HEADER_NAME);
-        if (TOKEN.equals(incomingToken)) {
+        if (token.equals(incomingToken)) {
             chain.doFilter(request, response);
             return;
         }
